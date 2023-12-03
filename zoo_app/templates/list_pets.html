@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список животных в зоомагазине</title>
+</head>
+<body>
+    <h1>Список животных в продаже</h1>
+
+{% for pet in pets %}
+    <div>
+        <img src="{{ pet.image.url }}" alt="{{ pet.name }}">
+        <h2>{{ pet.name }}</h2>
+        <p>{{ pet.description }}</p>
+        <p>Цена: ${{ pet.price }}</p>
+
+
+        <form method="post" action="{% url 'book_pet' pet.id %}">
+            {% csrf_token %}
+            <label for="phone_number_book_{{ pet.id }}">Номер телефона:</label>
+            <input type="text" id="phone_number_book_{{ pet.id }}" name="phone_number" required>
+            <br>
+            <input type="submit" value="Забронировать">
+        </form>
+
+
+        <form method="post" action="{% url 'buy_pet' pet.id %}">
+            {% csrf_token %}
+            <label for="phone_number_buy_{{ pet.id }}">Номер телефона:</label>
+            <input type="text" id="phone_number_buy_{{ pet.id }}" name="phone_number" required>
+            <br>
+            <input type="submit" value="Подтвердить покупку">
+        </form>
+    </div>
+{% endfor %}
+
+</body>
+</html>
